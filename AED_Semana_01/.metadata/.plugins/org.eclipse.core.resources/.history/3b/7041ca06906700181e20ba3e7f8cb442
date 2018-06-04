@@ -1,0 +1,41 @@
+package semana_01;
+
+import java.awt.Dialog;
+
+import javax.swing.JOptionPane;
+
+public class Coordinador {
+	public int codigo;
+	public String nombre;
+	public int categoria;
+	public int celular;
+
+	
+	//Un método que retorne el sueldo del coordinador
+	 public double sueldoCoordinador(){
+		 double sueldo=0.0;
+	     int categoria=0;
+		 
+		 switch (categoria) {
+			case 0:
+				sueldo=8500;
+				
+				break;
+			case 1:
+				sueldo=6850;
+				
+				break;
+			case 2:
+				sueldo=5500;
+				
+				break;
+			default:  
+				JOptionPane.showMessageDialog(null,"Esta categoria no existe!!!!") ;
+				break;
+		}		 
+		 return sueldo;
+		 
+	 }
+	
+	
+}

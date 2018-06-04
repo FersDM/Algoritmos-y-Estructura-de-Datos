@@ -1,0 +1,56 @@
+package semana_01;
+
+public class Numeros {
+
+	public int numero1;
+	public int numero2;
+	public int numero3;
+	
+	//Un método que retorne el número menor.
+	public double numeroMenor(){
+		
+		double menor=numero1;
+		if(numero1<menor)
+		{menor=numero1;}
+			
+		else if(numero2<menor)
+		   {menor=numero2;}
+			
+			else menor=numero3;
+		return menor;
+	}
+	
+	//Un método que retorne el número mayor.
+	public double numeroMayor(){
+		
+		double menor=numero1;
+		if(numero1>menor)
+		{menor=numero1;}
+			
+		else if(numero2>menor)
+		   {menor=numero2;}
+			
+			else menor=numero3;
+		return menor;
+	}
+	
+	//Un método que retorne el número del medio (ubicado entre el menor y el mayor).
+    public double numeroMedio(){
+       
+    	double medio=0;
+    	
+		if(numeroMayor()>numero1 && numero1 >numeroMenor())
+		
+    	        medio=numero1;
+		else if(numeroMayor()>numero2 && numero2 >numeroMenor())
+			
+	        {medio=numero2;}
+		
+		else medio=numero3;
+    			 
+    	
+    return medio ;
+    }
+
+
+}

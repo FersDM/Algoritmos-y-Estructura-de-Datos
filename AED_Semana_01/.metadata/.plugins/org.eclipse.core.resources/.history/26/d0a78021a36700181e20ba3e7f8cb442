@@ -1,0 +1,42 @@
+package semana_01;
+
+public class Caja {
+
+	public double largoCentímetros;
+	public double anchoCentímetros;
+	public double altoCentímetros;
+	public double pesoBalanza;
+	public double kilogramos;
+
+	// Un método que retorne el volumen de la caja en centímetros cúbicos (largo
+	// * ancho * alto).
+	
+	public double volCaja(){
+		return largoCentímetros*anchoCentímetros*altoCentímetros;
+		
+	}
+	
+	/*
+	 * Un método que retorne el peso volumétrico en kilogramos: (volumen en
+	 * centímetros cúbicos / 5000).
+	 */
+
+	public double pesoKilogramos(){
+		return  volCaja()/5000;
+	}
+	
+	
+	/*
+	 * Un método que retorne el peso facturable que es el mayor peso entre el
+	 * peso de balanza y el peso volumétrico.
+	 */
+      public double pesoFacturable(){
+    	  double peso=0;
+    	  
+    	  if (pesoBalanza>peso)
+    		  peso=pesoBalanza;
+    		  else if (pesoKilogramos()>peso)
+    			  peso=pesoFacturable();
+    	  return peso;
+      }
+}

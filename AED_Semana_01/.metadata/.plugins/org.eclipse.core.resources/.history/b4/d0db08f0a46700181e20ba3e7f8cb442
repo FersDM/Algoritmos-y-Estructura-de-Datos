@@ -1,0 +1,23 @@
+package semana_01;
+
+public class Equipo {
+	public int codigo; 
+	public String marca;
+	public String color;
+	public double precioDolares;
+	
+	//Un método que retorne el precio del equipo en soles. Considere que: 1 dólar = 3.25 soles.
+	
+	public double precioSoles(){
+		return precioDolares*3.25;
+	}
+	
+	
+	
+	//Un método que retorne el precio del equipo en euros. Considere que: 1 euro = 1.20 dólares.
+	
+	public double precioEuros(){
+		return precioDolares*120;
+	}
+	
+}
