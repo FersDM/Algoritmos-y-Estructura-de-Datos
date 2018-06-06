@@ -10,6 +10,10 @@ import javax.swing.JTextArea;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import Arreglos.ArregloCliente;
+import arreglos.ArregloClientes;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -35,6 +39,7 @@ public class Cliente extends JDialog implements ActionListener {
 	private JScrollPane scrollPane;
 	private JTable tblDato;
 
+	ArregloCliente ac = new Arreglos("clientes.txt");
 	/**
 	 * Launch the application.
 	 */
@@ -168,6 +173,13 @@ public class Cliente extends JDialog implements ActionListener {
 		}
 	}
 	protected void actionPerformedBtnAdicionar(ActionEvent arg0) {
+		btnIngresar.setEnabled(false);
+		btnModificar.setEnabled(true);
+		btnAceptar.setEnabled(true);
+		limpieza();
+		txtCodigo.setText("" + ac.codigoCorrelativo());
+		habilitarEntradas(true);
+		txtNombres.requestFocus();
 	}
 	protected void actionPerformedBtnConsultar(ActionEvent arg0) {
 	}
