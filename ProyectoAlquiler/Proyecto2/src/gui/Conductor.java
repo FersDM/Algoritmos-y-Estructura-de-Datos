@@ -1,40 +1,55 @@
 package gui;
 
 import java.awt.EventQueue;
-
-import javax.swing.JDialog;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
-public class Conductor extends JDialog implements ActionListener {
+import Arreglos.ArregloConductor;
+
+import libreria.Alerta;
+import libreria.Fecha;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+
+
+public class Conductor extends JDialog implements ActionListener, MouseListener {
 	
-	DefaultTableModel mod=new DefaultTableModel();
-	
-	private JButton btnAdicionar;
-	private JButton btnConsultar;
-	private JButton btnModificar;
-	private JButton btnEliminar;
-	private JButton btnListar;
-	private JLabel lblIDconductor;
-	private JTextField txtConductor;
-	private JLabel lblNroBrevete;
+	private static final long serialVersionUID = 1L;
+
+	private JLabel lblidConductor;
+	private JLabel lblBrevete;
 	private JLabel lblNombre;
 	private JLabel lblApellido;
 	private JLabel lblCategoria;
+	private JTextField txtConductor;
 	private JTextField txtBrevete;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
-	private JTextField txtCategoria;
+	private JTextField txtNombres;
+	private JTextField txtApellidos;
+	private JButton btnAceptar;
+	private JButton btnIngresar;
+	private JButton btnModificar;
+	private JButton btnEliminar;
+	private JButton btnGrabar;
 	private JScrollPane scrollPane;
-	private JTable tblDato;
-
+	private JTable tblConductor;
+	private DefaultTableModel modelo;	
+	
+	ArregloConductor co = new ArregloConductor("conductor.txt");
+	private JComboBox cboCategoria;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,112 +60,140 @@ public class Conductor extends JDialog implements ActionListener {
 					Conductor dialog = new Conductor();
 					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the dialog.
 	 */
 	public Conductor() {
-		setBounds(100, 100, 609, 482);
+		setTitle("Mantenimiento | Conductor");
+		setResizable(false);
+		setIconImage(new ImageIcon("imagenes/PrimaTaxi.png").getImage());
+		setSize(1000, 600);
 		getContentPane().setLayout(null);
 		
-		btnAdicionar = new JButton("Adicionar");
-		btnAdicionar.addActionListener(this);
-		btnAdicionar.setBounds(478, 8, 89, 23);
-		getContentPane().add(btnAdicionar);
+		lblidConductor = new JLabel("Id Conductor");
+		lblidConductor.setBounds(728, 45, 111, 23);
+		getContentPane().add(lblidConductor);
+	
+		lblBrevete = new JLabel("Nro Brevete");
+		lblBrevete.setBounds(728, 75, 111, 23);
+		getContentPane().add(lblBrevete);
 		
-		btnConsultar = new JButton("Consultar");
-		btnConsultar.addActionListener(this);
-		btnConsultar.setBounds(478, 42, 89, 23);
-		getContentPane().add(btnConsultar);
+		lblNombre = new JLabel("Nombres");
+		lblNombre.setBounds(728, 105, 111, 23);
+		getContentPane().add(lblNombre);
+
+		lblApellido = new JLabel("Apellidos");
+		lblApellido.setBounds(728, 139, 111, 23);
+		getContentPane().add(lblApellido);
+	
+		lblCategoria = new JLabel("Categoria");
+		lblCategoria.setBounds(728, 173, 111, 23);
+		getContentPane().add(lblCategoria);
+		
+		txtConductor = new JTextField();
+		txtConductor.setBounds(833, 45, 151, 23);
+		getContentPane().add(txtConductor);
+		txtConductor.setColumns(10);
+		
+		txtBrevete = new JTextField();
+		txtBrevete.setBounds(833, 75, 151, 23);
+		getContentPane().add(txtBrevete);
+		txtBrevete.setColumns(10);
+		
+		txtNombres = new JTextField();
+		txtNombres.setBounds(833, 105, 151, 23);
+		getContentPane().add(txtNombres);
+		txtNombres.setColumns(10);
+		
+		txtApellidos = new JTextField();
+		txtApellidos.setBounds(833, 139, 151, 23);
+		getContentPane().add(txtApellidos);
+
+		btnAceptar = new JButton(new ImageIcon("imagenes/aceptar.png"));
+		btnAceptar.addActionListener(this);
+		btnAceptar.setBounds(947, 218, 20, 23);
+		getContentPane().add(btnAceptar);
+		
+		btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(this);
+		btnIngresar.setIcon(new ImageIcon("imagenes/ingresar.png"));
+		btnIngresar.setBounds(794, 255, 150, 33);
+		getContentPane().add(btnIngresar);
 		
 		btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(this);
-		btnModificar.setBounds(478, 76, 89, 23);
+		btnModificar.setIcon(new ImageIcon("imagenes/modificar.png"));
+		btnModificar.setBounds(794, 299, 150, 33);
 		getContentPane().add(btnModificar);
 		
 		btnEliminar = new JButton("Eliminar");
 		btnEliminar.addActionListener(this);
-		btnEliminar.setBounds(478, 110, 89, 23);
+		btnEliminar.setIcon(new ImageIcon("imagenes/eliminar.png"));
+		btnEliminar.setBounds(794, 343, 150, 33);		
 		getContentPane().add(btnEliminar);
 		
-		btnListar = new JButton("Listar");
-		btnListar.addActionListener(this);
-		btnListar.setBounds(478, 144, 89, 23);
-		getContentPane().add(btnListar);
-		
-		lblIDconductor = new JLabel("iDConductor");
-		lblIDconductor.setBounds(10, 12, 65, 14);
-		getContentPane().add(lblIDconductor);
-		
-		txtConductor = new JTextField();
-		txtConductor.setBounds(85, 9, 110, 20);
-		getContentPane().add(txtConductor);
-		txtConductor.setColumns(10);
-		
-		lblNroBrevete = new JLabel("NroBrevete");
-		lblNroBrevete.setBounds(10, 46, 65, 14);
-		getContentPane().add(lblNroBrevete);
-		
-		lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(10, 80, 46, 14);
-		getContentPane().add(lblNombre);
-		
-		lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(10, 114, 46, 14);
-		getContentPane().add(lblApellido);
-		
-		lblCategoria = new JLabel("Categoria");
-		lblCategoria.setBounds(10, 148, 65, 14);
-		getContentPane().add(lblCategoria);
-		
-		txtBrevete = new JTextField();
-		txtBrevete.setBounds(85, 43, 110, 20);
-		getContentPane().add(txtBrevete);
-		txtBrevete.setColumns(10);
-		
-		txtNombre = new JTextField();
-		txtNombre.setColumns(10);
-		txtNombre.setBounds(85, 77, 110, 20);
-		getContentPane().add(txtNombre);
-		
-		txtApellido = new JTextField();
-		txtApellido.setColumns(10);
-		txtApellido.setBounds(85, 111, 110, 20);
-		getContentPane().add(txtApellido);
-		
-		txtCategoria = new JTextField();
-		txtCategoria.setColumns(10);
-		txtCategoria.setBounds(85, 145, 110, 20);
-		getContentPane().add(txtCategoria);
+		btnGrabar = new JButton("Grabar");
+		btnGrabar.addActionListener(this);
+		btnGrabar.setIcon(new ImageIcon("imagenes/grabar.png"));
+		btnGrabar.setBounds(794, 387, 150, 33);
+		getContentPane().add(btnGrabar);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 173, 573, 259);
+		scrollPane.setBounds(10, 10, 700, 550);
 		getContentPane().add(scrollPane);
 		
-		tblDato = new JTable();
-		scrollPane.setViewportView(tblDato);
-
-		// CONFIGURAR LA TABLA
-				//AGREE COLUMNAS
-				mod.addColumn("Idconductor");
-				mod.addColumn("Nrobrevete");
-				mod.addColumn("Nombre");
-				mod.addColumn("Apellido");
-				mod.addColumn("Categoria");
-				
-				//ASIGNAR EL MODELO A LA  TABLA
-				tblDato.setModel(mod);
+		tblConductor = new JTable();
+		tblConductor.addMouseListener(this);
+		tblConductor.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		tblConductor.setFillsViewportHeight(true);
+		scrollPane.setViewportView(tblConductor);
 		
+		modelo = new DefaultTableModel();
+		modelo.addColumn("Id Conductor");
+		modelo.addColumn("Nro Brevete");
+		modelo.addColumn("Nombre");
+		modelo.addColumn("Apellido");
+		modelo.addColumn("Categoria");
+		tblConductor.setModel(modelo);
+		
+		txtConductor.setEditable(false);
+		
+		cboCategoria = new JComboBox();
+		cboCategoria.setModel(new DefaultComboBoxModel(new String[] {"Seleccionar", "A1", "A2"}));
+		cboCategoria.setBounds(833, 174, 151, 20);
+		getContentPane().add(cboCategoria);
+		habilitarEntradas(false);
+		ajustarAnchoColumnas();	
+		
+		listar();
+		editarFila();
+	}
+	private int anchoColumna(int porcentaje) {
+		return porcentaje * scrollPane.getWidth() / 100;
+	}
+	private void ajustarAnchoColumnas() {
+		TableColumnModel tcm = tblConductor.getColumnModel();
+		tcm.getColumn(0).setPreferredWidth(anchoColumna( 8));  
+		tcm.getColumn(1).setPreferredWidth(anchoColumna( 8));
+		tcm.getColumn(2).setPreferredWidth(anchoColumna( 8)); 
+		tcm.getColumn(3).setPreferredWidth(anchoColumna( 8));  
+		tcm.getColumn(4).setPreferredWidth(anchoColumna( 8));  
+
 	}
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == btnListar) {
-			actionPerformedBtnListar(arg0);
+		if (arg0.getSource() == btnAceptar) {
+			actionPerformedBtnAceptar(arg0);
+		}
+		if (arg0.getSource() == btnGrabar) {
+			actionPerformedBtnGrabar(arg0);
 		}
 		if (arg0.getSource() == btnEliminar) {
 			actionPerformedBtnEliminar(arg0);
@@ -158,21 +201,203 @@ public class Conductor extends JDialog implements ActionListener {
 		if (arg0.getSource() == btnModificar) {
 			actionPerformedBtnModificar(arg0);
 		}
-		if (arg0.getSource() == btnConsultar) {
-			actionPerformedBtnConsultar(arg0);
-		}
-		if (arg0.getSource() == btnAdicionar) {
-			actionPerformedBtnAdicionar(arg0);
+		if (arg0.getSource() == btnIngresar) {
+			actionPerformedBtnIngresar(arg0);
 		}
 	}
-	protected void actionPerformedBtnAdicionar(ActionEvent arg0) {
-	}
-	protected void actionPerformedBtnConsultar(ActionEvent arg0) {
+	protected void actionPerformedBtnIngresar(ActionEvent arg0) {
+		btnIngresar.setEnabled(false);
+		btnModificar.setEnabled(true);
+		btnAceptar.setEnabled(true);
+		limpieza();
+		txtConductor.setText("" + co.codigoCorrelativo());
+		habilitarEntradas(true);
+		txtBrevete.requestFocus();
 	}
 	protected void actionPerformedBtnModificar(ActionEvent arg0) {
+		btnIngresar.setEnabled(true);
+		btnModificar.setEnabled(false);
+		if (co.tamaño() == 0) {
+			btnAceptar.setEnabled(false);
+			habilitarEntradas(false);
+			Alerta.mensaje(this, "No existen Conductor");	
+		}
+		else {
+			btnAceptar.setEnabled(true);
+			habilitarEntradas(true);
+			editarFila();
+			txtBrevete.requestFocus();
+		}
 	}
 	protected void actionPerformedBtnEliminar(ActionEvent arg0) {
+		btnIngresar.setEnabled(true);
+		btnModificar.setEnabled(true);
+		btnAceptar.setEnabled(false);
+		if (co.tamaño() == 0)
+			Alerta.mensaje(this, "No existen Conductor");
+		else {
+			int ok = Alerta.confirmar(this, "¿ Desea eliminar el registro ?");
+			if (ok == 0) {
+				co.eliminar(co.buscar(leerIdConductor()));
+				listar();
+				editarFila();
+			}
+		}
 	}
-	protected void actionPerformedBtnListar(ActionEvent arg0) {
+	protected void actionPerformedBtnGrabar(ActionEvent arg0) {
+		btnIngresar.setEnabled(true);
+		btnModificar.setEnabled(true);
+		btnAceptar.setEnabled(false);
+		if (co.existeArchivo()) {
+			int ok = Alerta.confirmar(this, "¿ Desea actualizar \"" + co.getArchivo() + "\" ?");
+			if (ok == 0) {
+				co.grabarConductor();
+				Alerta.mensaje(this, "\"" + co.getArchivo() + "\" ha sido actualizado");
+			}
+			else
+				Alerta.mensaje(this, "No se actualizó  \"" + co.getArchivo() + "\"");
+		}
+		else {
+			co.grabarConductor();
+			Alerta.mensaje(this, "\"" + co.getArchivo() + "\" ha sido creado");
+		}
+	}
+	
+
+	public void mouseClicked(MouseEvent arg0) {
+		if (arg0.getSource() == tblConductor) {
+			mouseClickedTblCliente(arg0);
+		}
+	}
+	public void mouseEntered(MouseEvent arg0) {
+	}
+	public void mouseExited(MouseEvent arg0) {
+	}
+	public void mousePressed(MouseEvent arg0) {
+	}
+	public void mouseReleased(MouseEvent arg0) {
+	}
+
+	protected void mouseClickedTblCliente(MouseEvent arg0) {
+		habilitarEntradas(false);
+		habilitarBotones(true);
+		editarFila();
+	}
+	protected void actionPerformedBtnAceptar(ActionEvent arg0) {
+		int idConductor = leerIdConductor();
+		String nroBrevete = leerBrevete();
+		if (nroBrevete.length() > 0) {
+			String nombre = leerNombres();
+			if (nombre.length() > 0) {
+						String apellido = leerApellidos();
+						if (apellido.length() > 0) {
+							String categoria = leerCategoria();
+							
+							{
+										if (btnIngresar.isEnabled() == false) {
+											clases.Conductor nuevo = new clases.Conductor( idConductor,  nroBrevete,  nombre,  apellido,  categoria);
+											co.adicionar(nuevo);
+											btnIngresar.setEnabled(true);
+										}
+										if (btnModificar.isEnabled() == false) {
+											clases.Conductor x = co.buscar(idConductor);
+											x.setNroBrevete(nroBrevete);
+											x.setNombre(nombre);
+											x.setApellido(apellido);
+											x.setCategoria(categoria);
+											btnModificar.setEnabled(true);
+											}
+										listar();
+										habilitarEntradas(false);
+							}
+						}
+						else {
+							Alerta.mensaje(this, "Ingrese Apellido correcto");
+							txtApellidos.setText("");
+							txtApellidos.requestFocus();
+						}
+					}
+				
+				else {
+					Alerta.mensaje(this, "Ingrese Nombre  correcto");
+					txtNombres.setText("");
+					txtNombres.requestFocus();
+			}
+		}
+		else {
+			Alerta.mensaje(this, "Ingrese Brevete correctos");
+			txtBrevete.setText("");
+			txtBrevete.requestFocus();
+		}
+		}
+	
+	public void listar() {
+		clases.Conductor x;
+		int posFila = 0;
+		if (modelo.getRowCount() > 0)
+			posFila = tblConductor.getSelectedRow();
+		if (modelo.getRowCount() == co.tamaño()-1)
+			posFila = co.tamaño()-1;
+		if (posFila == co.tamaño())
+			posFila --;
+		modelo.setRowCount(0);
+		for (int i=0; i<co.tamaño(); i++) {
+			x = co.obtener(i);
+			Object[] fila = { x.getIdConductor(), 
+						      x.getNroBrevete(),
+						      x.getNombre(),
+						      x.getApellido(),
+						      x.getCategoria(),
+						      };
+			modelo.addRow(fila);
+		}
+		if (co.tamaño() > 0)
+			tblConductor.getSelectionModel().setSelectionInterval(posFila, posFila);
+	}
+	
+	void limpieza() {
+		txtConductor.setText("");
+		txtBrevete.setText("");
+		txtNombres.setText("");
+		txtApellidos.setText("");
+		cboCategoria.setSelectedItem("Seleccionar");
+	}
+	void editarFila() {
+		if (co.tamaño() == 0)
+			limpieza();
+		else {
+			clases.Conductor x = co.obtener(tblConductor.getSelectedRow());
+			txtConductor.setText("" + x.getIdConductor());
+			txtBrevete.setText(x.getNroBrevete());
+			txtNombres.setText(x.getNombre());
+			txtApellidos.setText(x.getApellido());
+			cboCategoria.setSelectedItem(x.getCategoria());
+		}
+	}
+	void habilitarEntradas(boolean sino) {
+		btnAceptar.setEnabled(sino);
+		txtBrevete.setEditable(sino);
+		txtNombres.setEditable(sino);
+		txtApellidos.setEditable(sino);
+	}
+	void habilitarBotones(boolean sino) {
+		btnIngresar.setEnabled(sino);
+		btnModificar.setEnabled(sino);
+	}
+	int leerIdConductor() {
+		return Integer.parseInt(txtConductor.getText().trim());
+	}
+	String leerBrevete() {
+		return txtBrevete.getText().trim();
+	}
+	String leerNombres() {
+		return txtNombres.getText().trim();
+	}
+	String leerApellidos()
+	{
+		return txtApellidos.getText().trim();
+	}
+	String leerCategoria() {
+		return cboCategoria.getSelectedItem().toString();
 	}
 }

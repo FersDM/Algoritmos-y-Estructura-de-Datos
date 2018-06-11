@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="Arreglos.ArregloCliente"/>
+<fullyQualifiedTypeName name="gui.Cliente"/>
+<fullyQualifiedTypeName name="clases.Cliente"/>
+<fullyQualifiedTypeName name="Arreglos.ArregloConductor"/>
+<fullyQualifiedTypeName name="clases.Conductor"/>
 </qualifiedTypeNameHistroy>
