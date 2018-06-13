@@ -5,4 +5,8 @@
 <fullyQualifiedTypeName name="clases.Cliente"/>
 <fullyQualifiedTypeName name="Arreglos.ArregloConductor"/>
 <fullyQualifiedTypeName name="clases.Conductor"/>
+<fullyQualifiedTypeName name="Arreglos.ArregloVehiculo"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.VerifyError"/>
+<fullyQualifiedTypeName name="clases.Vehiculo"/>
 </qualifiedTypeNameHistroy>
